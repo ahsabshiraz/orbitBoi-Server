@@ -73,4 +73,28 @@ const getExperienceById = async (req, res) => {
   }
 };
 
-module.exports = { createExperience, uploadModelToExperience, getUserExperiences, getExperienceById }; 
+const getSceneData = async (req, res) => {
+  try {
+    const experience = await Experience.findOne({ _id: req.params.id, user: req.user.id });
+    if (!experience) return res.status(404).json({ error: "Experience not found" });
+    res.json(experience.sceneData || {});
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch scene data" });
+  }
+};
+
+const updateSceneData = async (req, res) => {
+  try {
+    const experience = await Experience.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      { sceneData: req.body },
+      { new: true }
+    );
+    if (!experience) return res.status(404).json({ error: "Experience not found" });
+    res.json(experience.sceneData);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update scene data" });
+  }
+};
+
+module.exports = { createExperience, uploadModelToExperience, getUserExperiences, getExperienceById, getSceneData, updateSceneData }; 
