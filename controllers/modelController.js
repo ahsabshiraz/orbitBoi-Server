@@ -19,6 +19,7 @@ const uploadModel = async (req, res) => {
       format: file.originalname.split('.').pop(),
       size: `${(result.bytes / 1024 / 1024).toFixed(2)} MB`,
       cloudinaryUrl: result.secure_url,
+      user: req.user.id,
     });
 
     const savedModel = await newModel.save();
@@ -30,4 +31,14 @@ const uploadModel = async (req, res) => {
   }
 };
 
-module.exports = { uploadModel };
+const getUserModels = async (req, res) => {
+  try {
+    const models = await Model.find({ user: req.user.id }).sort({ uploadedAt: -1 });
+    res.json(models);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch models" });
+  }
+};
+
+module.exports = { uploadModel, getUserModels };
