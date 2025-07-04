@@ -41,4 +41,13 @@ const getUserModels = async (req, res) => {
   }
 };
 
-module.exports = { uploadModel, getUserModels };
+const getModelById = async (req, res) => {
+  try {
+    const model = await Model.findOne({ _id: req.params.id, user: req.user.id });
+    if (!model) return res.status(404).json({ error: "Model not found" });
+    res.json(model);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch model" });
+  }
+};
+module.exports = { uploadModel, getUserModels, getModelById };
