@@ -11,8 +11,8 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/experiences', require('./routes/experienceRoutes'))
-
+const port = process.env.PORT || 4000
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
-        app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
+        app.listen(port, () => console.log(`Server running on port ${port}`));
     }).catch((err) => console.error(err));
