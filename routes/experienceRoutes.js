@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createExperience, uploadModelToExperience, getUserExperiences, getExperienceById, getSceneData, updateSceneData } = require("../controllers/experienceController");
+const { createExperience, uploadModelToExperience, getUserExperiences, getExperienceById, getSceneData, updateSceneData, deleteExperience } = require("../controllers/experienceController");
 const verifyToken = require("../middlewares/verifyToken");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -11,5 +11,6 @@ router.get("/", verifyToken, getUserExperiences);
 router.get("/:id", verifyToken, getExperienceById);
 router.get("/:id/scene", verifyToken, getSceneData);
 router.put("/:id/scene", verifyToken, updateSceneData);
+router.delete("/:id", verifyToken, deleteExperience);
 
 module.exports = router; 

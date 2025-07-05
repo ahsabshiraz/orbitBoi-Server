@@ -7,7 +7,7 @@ const createExperience = async (req, res) => {
     const { name, description } = req.body;
     if (!name) return res.status(400).json({ error: "Name is required" });
     const newExperience = new Experience({
-      name:req.body.n,
+      name,
       description,
       user: req.user.id,
       models: []
@@ -97,4 +97,15 @@ const updateSceneData = async (req, res) => {
   }
 };
 
-module.exports = { createExperience, uploadModelToExperience, getUserExperiences, getExperienceById, getSceneData, updateSceneData }; 
+const deleteExperience = async (req, res) => {
+  try {
+    const experience = await Experience.findOneAndDelete({ _id: req.params.id, user: req.user.id });
+    if (!experience) return res.status(404).json({ error: "Experience not found" });
+    res.json({ message: "Experience deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete experience" });
+  }
+};
+
+module.exports = { createExperience, uploadModelToExperience, getUserExperiences, getExperienceById, getSceneData, updateSceneData, deleteExperience }; 
