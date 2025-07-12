@@ -21,7 +21,13 @@ const experienceSchema = new mongoose.Schema({
     },
     environment: {
       exposure: { type: Number, default: 1 },
-      env: { type: Boolean, default: false },
+      hdr: {
+        enabled: { type: Boolean, default: false },
+        hdrRadius: { type: Number },
+        hdrHeight: { type: Number },
+        hdrScale: { type: Number },
+        hdrType: { type: String, default: "forest" }
+      },
       backgroundColor: { type: String, default: "#ffffff" }
     },
     fog: {
@@ -33,7 +39,7 @@ const experienceSchema = new mongoose.Schema({
       enabled: { type: Boolean, default: true },
       groundType: { type: String, default: 'plane' },
       length: { type: Number, default: 100 },
-      width: { type: Number, default: 100 },
+      width: { type: Number, default: 100 }
     },
     modelPositions: { type: Object, default: {} }
   },
