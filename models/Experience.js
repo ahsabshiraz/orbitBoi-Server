@@ -29,6 +29,12 @@ const experienceSchema = new mongoose.Schema({
       min: { type: Number, default: 10 },
       max: { type: Number, default: 100 }
     },
+    ground: {
+      enabled: { type: Boolean, default: true },
+      groundType: { type: String, default: 'plane' },
+      length: { type: Number, default: 100 },
+      width: { type: Number, default: 100 },
+    },
     modelPositions: { type: Object, default: {} }
   },
   createdAt: { type: Date, default: Date.now }
