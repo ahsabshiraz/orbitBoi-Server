@@ -26,7 +26,12 @@ const experienceSchema = new mongoose.Schema({
         hdrRadius: { type: Number },
         hdrHeight: { type: Number },
         hdrScale: { type: Number },
-        hdrType: { type: String, default: "forest" }
+        hdrType: { type: String, default: "forest" },
+        hrdUrl: [{
+          name: { type: String, required: true },
+          cloudinaryUrl: { type: String, required: true }
+        }],
+        selected: { type: mongoose.Schema.Types.ObjectId }
       },
       backgroundColor: { type: String, default: "#ffffff" }
     },
